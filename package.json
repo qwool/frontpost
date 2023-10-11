@@ -1,0 +1,20 @@
+{
+  "name": "static-gen",
+  "version": "1.0.0",
+  "description": "generates a static website from .md files",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "jsdom": "^22.1.0",
+    "marked": "^9.0.1",
+    "strftime": "^0.10.2"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
