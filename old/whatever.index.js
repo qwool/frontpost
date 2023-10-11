@@ -115,6 +115,7 @@ function generateHeading(dom) {
 */
 function getContent(fileContent) {
   if(!fileContent.match(/^---([\s\S]*?)---/)) return {"frontmatter": "", "content": fileContent}
+  // console.log(fileContent.match(/^---([\s\S]*?)---/))
   try {
 
     const [_, frontmatter, content] = fileContent.split('---'); // # assuming '---' is the delimiter
@@ -163,7 +164,7 @@ function tokenParser(html, tokens) {
 function summary(content, chars) {
   const noHeadings = content.replace(/#{1,6}.*\n/g, '');
   let x = noHeadings.substring(0, chars);
-  return x.match('[a-zA-Z].*\n')
+  return x.match('[a-zA-Z].*\n2')
 }
 
 function generateIndex() {
