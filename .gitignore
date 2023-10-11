@@ -1,10 +1,10 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
 bun.lockb
-dist/*
-src/content/*
+dist/
+src/content/
   
-*/
+# */
 # Logs
 
 logs
