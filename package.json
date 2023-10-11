@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "generates a static website from .md files",
   "main": "index.js",
+  "scripts": {
+    "clean": "rm ./dist/*",
+    "build": "time node ./index.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -5,6 +5,7 @@
    - also i like to comment something i wanna reuse later, so,
       just in case, actual comments are prefixed with #
    - multiline comments above functions
+   - also attempt to not use more than 3-4 indents
 */
 const marked = require('marked');
 const strftime = require('strftime');
@@ -24,43 +25,56 @@ marked.use({
   }
 });
 
-let pages = [];
 let templates = {
   "index": fs.readFileSync(config.src + "/templates/index.html", 'utf8'),
   "post": fs.readFileSync(config.src + "/templates/post.html", 'utf8'),
   "listing": fs.readFileSync(config.src + "/templates/articleListing.html", 'utf8'),
 }
+/* chat gibbidy gave me this when i asked it for pseudocode so i can get rid of my 8 indents!!
+
+1. Initialize an empty array `fileResults`.
+2. Read the contents of a directory asynchronously.
+3. For each file in the directory:
+   1. Check if the file has a ".md" extension.
+   2. If it's an ".md" file, read the content from the file asynchronously.
+   3. Apply an asynchronous function to process the content of the file and get a result.
+   4. Store the result in an object with the filename.
+   5. Add the object to the `fileResults` array.
+4. Sort the `fileResults` array based on the result of the processing function.
+5. Initialize an empty array `sortedFilenames`.
+6. For each object in `fileResults`:
+   1. Extract the filename from the object.
+   2. Add the filename to the `sortedFilenames` array.
+7. Write the sorted filenames to another document asynchronously.
+
+*/
+
+let pages = [];
+let files = [];
 
 fs.readdir(config.input, (err, files) => {
   if (err) console.error(err);
-  const totalTasks = files.filter(file => path.extname(file) === ".md").length;
-
+  files = files.filter(file => path.extname(file) === ".md")
   files.forEach((file) => {
     const parsed = path.parse(file)
     const filePath = path.join(config.input, file);
-    fs.stat(filePath, (statError, stats) => {
-      if (statError) new Error(statError);
-      // # checks done: not a directory and is .md
-      if (stats.isFile() && parsed.ext === ".md") {
-        fs.readFile(filePath, 'utf8', (err, contents) => {
-          const created = getContent(contents).frontmatter.created
-          if (err) new Error(err);
-          let target = path.join(config.output, parsed.name+".html");
-          // # getContent(contents).content? whatever
-          fs.writeFile(target, generateContent(getContent(contents).content), (err) => {
-            if (err) new Error(err);
-            else {
-              pages.push({ "path": filePath, "created": created, "accessTime": stats.mtimeMs, "target": target, "filename": parsed.name+".html"});
-              completedTasks++;
-              console.log(completedTasks + "/" + totalTasks + ": " + filePath);
-              if (completedTasks >= totalTasks) {
-                pages.slice().sort((x, y) => y.created - x.created);
-                generateIndex();
-              };
-            };
-          });
-        });
-      };
+    fs.readFile(filePath, 'utf8', (err, contents) => {
+      if (err) console.error(err);
+      const gc = getContent(contents)
+      let target = path.join(config.output, parsed.name  +".html");
+      // # getContent(contents).content? whatever
+      fs.writeFile(target, generateContent(gc.content), (err) => {
+        if (err) console.error(err); else {
+          const created = gc.frontmatter.created ? gc.frontmatter.created : fs.statSync(filePath).mtime;
+          pages.push({ "path": filePath, "created": new Date(created), "target": target, "filename": parsed.name+".html"}) ;
+          completedTasks++;
+          console.log(completedTasks + "/" + files.length + ": " + filePath);
+          if (completedTasks >= files.length) {
+            pages.sort((a, b) => b.created - a.created);
+            generateIndex();
+          };
+        };
+      });
     });
   });
 });
@@ -72,7 +86,7 @@ function generateContent(data) {
     "{content}": marked.parse(data),
     "{title}": generateSummary(data),
     "{header}": config.name,
-    })
+  })
   return x
 }
 
@@ -93,7 +107,7 @@ function getContent(fileContent) {
 
     const frontmatterData = yaml.load(frontmatter);
 
-    return {"frontmatter": frontmatterData, "content": content};
+    return { "frontmatter": frontmatterData, "content": content };
   } catch (err) {
     console.error('Error reading file:', err);
     return null;
