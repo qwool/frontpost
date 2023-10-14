@@ -1,8 +1,8 @@
 <html>
 <head>
   <title>{header}</title>
-  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+  <link rel="stylesheet" href="./new.css">
+  <link rel="stylesheet" href="./cards.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </meta>
@@ -10,12 +10,29 @@
 <body style="background:black">
   <main>
   <header>
-    <a href="index.html"> <h2>{header}</h2> </a>
+    <a href="https://qwool.github.io/blog"> <h2>{header}</h2> </a>
+    <a href="https://qwool.github.io">main</a> /
+    <a href="https://qwool.github.io/blog">blog</a>
   </header>
-  {articles}
+  <noscript>turn on JS if you hav fat fingers or just really like clickable cards</noscript>
+  <div class="grid">
+    {articles}
+  </div>
   </main>
-  <hr>
-  <footer>made with <3 by me!!!</footer>
+
+  <footer style="margin-top: 5rem">made with <a href="https://github.com/qwool/frontpost">frontpost</a> by me!!! </footer>
+    <script>
+      const clickableDivs = document.querySelectorAll(".card");
+  
+      clickableDivs.forEach((div) => {
+        div.addEventListener("click", function() {
+          const href = div.getAttribute("data-href");
+          
+          if (href) window.location.href=href;
+        });
+      });
+    </script>
+  
 </body>
 
 </html>

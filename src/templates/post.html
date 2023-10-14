@@ -1,34 +1,40 @@
 <html>
 <head>
   <title>{title}</title>
-  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+  <link rel="stylesheet" href="./new.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   .nonimportant {
     font-weight:300;
   }
+  img {
+    max-height: 40vh;
+  }
 </style>
 </head>
 <body style="background:black">
   <main>
-  <header>
-    <a href="index.html"> <h2>{header}</h2> </a>
-  </header>
-  <p class="nonimportant">
+    <header>
+      <a href="https://qwool.github.io/blog"> <h2>{header}</h2> </a>
+      <a href="https://qwool.github.io">main</a> /
+      <a href="https://qwool.github.io/blog">blog</a>
+    </header>
+    <p class="nonimportant">
   <span id="author">by {fm author}</span>
   <span id="created"> on {created}</span>
   </p>
   {content}
   </main>
   <hr>
-  <footer>made with <3 by me!!!</footer>
+  <footer>made with <a href="https://github.com/qwool/frontpost">frontpost</a> by me!!!</footer>
 </body>
 
 <script defer>
-if ("{fm author}" == "") document.getElementById("author").style.display = 'none';
-if ("{created}" == "") document.getElementById("created").style.display = 'none';
+const author = " {fm author} "
+const created = " {fm created} "
+if (author == ""  || author.includes("fm author")) document.getElementById("author").style.display = 'none';
+if (created == "" || created.includes("fm created")) document.getElementById("created").style.display = 'none';
 </script>
 </html>
 
