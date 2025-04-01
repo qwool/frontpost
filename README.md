@@ -24,17 +24,18 @@ a suckless, self-explanatory CMS in 180 lines of code (80ms build time)
 
 ## how to use::
 
+you will need a runtime with typescript. i prefer bun
 ```bash
 git clone https://github.com/qwool/frontpost
 cd frontpost
-npm i
-node prepareDirs
-node ./index.js
+bun i
+bun prepareDirs
+bun ./index.js
 ```
 then, everything is in your dist directory.
 
 ## how to ACTUALLY use it::
-every X before an option means how much time you'll spend on it. everything is sorted in order of importance
+every X before an option means how much time you'll spend on it. everything is sorted in order of importance. you can do any of them at any time
 - ```|___|``` put all your .md files inside src/content
 - ```|___|``` any file inside src/static gets copied into dist/
 - ```|x__|``` it uses [frontmatter](#frontmatter), which can be [customized](#frontmatter) as well!
