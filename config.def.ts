@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   
   /* directories for your source mostly.
       input: directory for articles
@@ -6,7 +6,7 @@ module.exports = {
   */ 
   "input": "src/content/", // never forget the slash at the end for now
   "src": "src/",
-  "output": "../blog/",
+  "output": "./blog/",
 
   // characters used when parsing templates!! useful for when you have alpine.js or jsx fighting for parsing
   // common options are (pasteable): "[[", "]]"; "<?=", "=>";
